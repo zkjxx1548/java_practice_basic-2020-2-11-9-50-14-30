@@ -24,7 +24,7 @@ public class App {
   public static void printRecheckStudents(Teacher teacher, ArrayList<Student> students) {
     System.out.println(String.format("教师%s名下的重复学生名单为：", teacher.getName()));
     for (Student student : students) {
-      System.out.println(String.format("%s，学号%s，%s入学。", student.getName(), student.getId(), student.getAdmissionDate()));
+      System.out.println(student.toString());
     }
   }
 }

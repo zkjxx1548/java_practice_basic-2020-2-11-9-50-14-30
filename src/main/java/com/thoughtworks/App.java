@@ -4,6 +4,7 @@ import com.thoughtworks.module.Student;
 import com.thoughtworks.module.Teacher;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class App {
@@ -21,10 +22,12 @@ public class App {
     printRecheckStudents(teacher, teacher.recheck());
   }
 
-  public static void printRecheckStudents(Teacher teacher, ArrayList<Student> students) {
+  public static void printRecheckStudents(Teacher teacher, HashMap<String, ArrayList<Student>> students) {
     System.out.println(String.format("教师%s名下的重复学生名单为：", teacher.getName()));
-    for (Student student : students) {
-      System.out.println(student.toString());
+    for (HashMap.Entry<String, ArrayList<Student>> entry : students.entrySet()) {
+      for (Student student : entry.getValue()) {
+        System.out.println(student.toString());
+      }
     }
   }
 }

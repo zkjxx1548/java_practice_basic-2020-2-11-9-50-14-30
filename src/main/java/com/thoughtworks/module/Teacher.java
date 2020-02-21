@@ -1,7 +1,7 @@
 package com.thoughtworks.module;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Teacher {
     private String name;
@@ -31,29 +31,26 @@ public class Teacher {
         this.students = students;
     }
 
-    public ArrayList<Student> recheck() {
-        //遍历，不重复的放入ids1，重复的id，如果ids2中不存在，放入ids2
-        List<String> ids1 = new ArrayList<>();
-        List<String> ids2 = new ArrayList<>();
+
+
+    public HashMap<String, ArrayList<Student>> recheck() {
+        HashMap<String, ArrayList<Student>> map = new HashMap<>();
         for (int i = 0; i < this.students.size(); i++) {
             String stuId = students.get(i).getId();
-            if (ids1.contains(stuId)) {
-                if (!ids2.contains(stuId)) {
-                    ids2.add(stuId);
-                }
-            } else {
-                ids1.add(stuId);
+            ArrayList<Student> idList = new ArrayList<>();
+            if (map.containsKey(stuId)) {
+                idList = map.get(stuId);
             }
+            idList.add(students.get(i));
+            map.put(stuId, idList);
         }
 
-        //返回重复的学生
-        List<Student> res = new ArrayList<>();
-        for (int i = 0; i < this.students.size(); i++) {
-            String stuId = students.get(i).getId();
-            if (ids2.contains(stuId)) {
-                res.add(students.get(i));
+        HashMap<String, ArrayList<Student>> mapRecheck = new HashMap<>();
+        for (HashMap.Entry<String, ArrayList<Student>> entry : map.entrySet()) {
+            if (entry.getValue().size() > 1) {
+                mapRecheck.put(entry.getKey(), entry.getValue());
             }
         }
-        return (ArrayList<Student>) res;
+        return mapRecheck;
     }
 }
